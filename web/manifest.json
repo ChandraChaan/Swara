@@ -1,11 +1,11 @@
 {
-    "name": "audioplayer",
-    "short_name": "audioplayer",
+    "name": "Swara",
+    "short_name": "Swara",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#14101F",
+    "theme_color": "#6A1FD1",
+    "description": "Swara - a music player for Indian classical ragas",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
