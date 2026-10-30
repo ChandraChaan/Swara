@@ -1,7 +1,8 @@
 import 'dart:io';
 
-import 'package:audioplayer/data/library_store.dart';
-import 'package:audioplayer/services/download_manager.dart';
+import 'package:swara/data/catalog_repository.dart';
+import 'package:swara/data/library_store.dart';
+import 'package:swara/services/download_manager.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
@@ -53,6 +54,8 @@ void main() {
     test('top artists come from history', () async {
       await store.addToHistory(onlineSong('1'));
       await store.addToHistory(deviceSong('x')); // Unknown artist is ignored.
+      // Built-in tracks are ignored too.
+      await store.addToHistory(CatalogRepository.bundled.first);
       expect(store.topArtists(), ['Artist 1']);
     });
 

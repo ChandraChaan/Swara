@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:audioplayer/data/catalog_repository.dart';
-import 'package:audioplayer/data/lyrics_service.dart';
-import 'package:audioplayer/data/sources/archive_source.dart';
-import 'package:audioplayer/data/sources/audius_source.dart';
-import 'package:audioplayer/data/sources/music_source.dart';
-import 'package:audioplayer/models/collection.dart';
-import 'package:audioplayer/models/song.dart';
+import 'package:swara/data/catalog_repository.dart';
+import 'package:swara/data/lyrics_service.dart';
+import 'package:swara/data/sources/archive_source.dart';
+import 'package:swara/data/sources/audius_source.dart';
+import 'package:swara/data/sources/music_source.dart';
+import 'package:swara/models/collection.dart';
+import 'package:swara/models/song.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
@@ -185,9 +185,9 @@ void main() {
             _FakeSource(SongSource.archive),
           ],
         );
-        final results = await repo.search('mastaaru');
-        expect(results.songs.single.title, 'Mastaaru Mastaaru');
-        expect(results.albums.single.title, 'Album for mastaaru');
+        final results = await repo.search('mohanam');
+        expect(results.songs.single.title, 'Mohanam Dawn');
+        expect(results.albums.single.title, 'Album for mohanam');
         expect(results.errors, containsAll(['Audius', 'Audius playlists']));
       },
     );

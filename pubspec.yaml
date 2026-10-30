@@ -1,4 +1,4 @@
-name: audioplayer
+name: swara
 description: Swara - a Telugu-first Indian music player with online streaming and offline downloads.
 publish_to: 'none'
 
@@ -24,6 +24,8 @@ dependencies:
   provider: ^6.1.5+1
   share_plus: ^13.3.1
   flutter_cache_manager: ^3.4.6
+  package_info_plus: ^10.2.2
+  url_launcher: ^6.3.3
 
 dev_dependencies:
   flutter_test:

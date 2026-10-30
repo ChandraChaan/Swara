@@ -29,7 +29,7 @@ class LyricsService {
           uri,
           headers: {
             'User-Agent':
-                'SwaraMusic/2.0 (https://github.com/darunaaru/audioplayer)',
+                'SwaraMusic/2.0 (https://github.com/ChandraChaan/Swara)',
           },
         )
         .timeout(const Duration(seconds: 10));

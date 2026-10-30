@@ -1,8 +1,8 @@
-import 'package:audioplayer/core/format.dart';
-import 'package:audioplayer/models/collection.dart';
-import 'package:audioplayer/models/lyrics.dart';
-import 'package:audioplayer/models/song.dart';
-import 'package:audioplayer/services/local_import_service.dart';
+import 'package:swara/core/format.dart';
+import 'package:swara/models/collection.dart';
+import 'package:swara/models/lyrics.dart';
+import 'package:swara/models/song.dart';
+import 'package:swara/services/local_import_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

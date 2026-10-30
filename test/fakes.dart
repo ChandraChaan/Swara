@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:audioplayer/data/library_store.dart';
-import 'package:audioplayer/models/song.dart';
-import 'package:audioplayer/services/audio_engine.dart';
+import 'package:swara/data/library_store.dart';
+import 'package:swara/models/song.dart';
+import 'package:swara/services/audio_engine.dart';
 import 'package:hive_ce/hive.dart';
 
 Song onlineSong(String id, {String? title}) => Song(

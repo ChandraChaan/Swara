@@ -1,6 +1,6 @@
-import 'package:audioplayer/data/library_store.dart';
-import 'package:audioplayer/services/audio_engine.dart';
-import 'package:audioplayer/services/player_controller.dart';
+import 'package:swara/data/library_store.dart';
+import 'package:swara/services/audio_engine.dart';
+import 'package:swara/services/player_controller.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'fakes.dart';

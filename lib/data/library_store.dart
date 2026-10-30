@@ -209,6 +209,8 @@ class LibraryStore extends ChangeNotifier {
     final counts = <String, int>{};
     for (final s in history) {
       if (s.artist.isEmpty || s.artist.startsWith('Unknown')) continue;
+      // Built-in tracks don't have an artist worth searching online for.
+      if (s.source == SongSource.asset) continue;
       counts[s.artist] = (counts[s.artist] ?? 0) + 1;
     }
     final sorted = counts.entries.toList()

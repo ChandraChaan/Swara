@@ -1,4 +1,4 @@
-package com.example.audioplayer
+package com.chandrachaan.swara
 
 import com.ryanheise.audioservice.AudioServiceActivity
 

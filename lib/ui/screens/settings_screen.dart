@@ -1,6 +1,8 @@
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/format.dart';
 import '../../core/languages.dart';
@@ -158,19 +160,87 @@ class SettingsScreen extends StatelessWidget {
             },
           ),
           header('About'),
-          const AboutListTile(
-            icon: Icon(Icons.info_outline_rounded),
-            applicationName: 'Swara',
-            applicationVersion: '2.0.0',
-            applicationLegalese:
-                'Music streams from Audius and the Internet Archive. Lyrics '
-                'from LRCLIB. All songs belong to their respective artists '
-                'and labels.',
-            child: Text('About Swara'),
-          ),
+          const _AboutSection(),
           const SizedBox(height: 32),
         ],
       ),
+    );
+  }
+}
+
+const _repoUrl = 'https://github.com/ChandraChaan/Swara';
+
+class _AboutSection extends StatelessWidget {
+  const _AboutSection();
+
+  Future<void> _open(BuildContext context, String url) async {
+    final ok = await launchUrl(
+      Uri.parse(url),
+      mode: LaunchMode.externalApplication,
+    );
+    if (!ok && context.mounted) showMessage(context, "Couldn't open $url");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<PackageInfo>(
+      future: PackageInfo.fromPlatform(),
+      builder: (context, snap) {
+        // Only the version name: split-per-ABI APKs offset the build number.
+        final version = snap.data?.version ?? '';
+        return Column(
+          children: [
+            ListTile(
+              leading: const Icon(Icons.info_outline_rounded),
+              title: const Text('Swara'),
+              subtitle: Text(
+                'Version $version\n'
+                'A Telugu-first music player for streaming and offline '
+                'listening.',
+              ),
+              isThreeLine: true,
+            ),
+            ListTile(
+              leading: const Icon(Icons.code_rounded),
+              title: const Text('Source code'),
+              subtitle: const Text('github.com/ChandraChaan/Swara'),
+              trailing: const Icon(Icons.open_in_new_rounded, size: 20),
+              onTap: () => _open(context, _repoUrl),
+            ),
+            ListTile(
+              leading: const Icon(Icons.system_update_rounded),
+              title: const Text('Check for updates'),
+              trailing: const Icon(Icons.open_in_new_rounded, size: 20),
+              onTap: () => _open(context, '$_repoUrl/releases/latest'),
+            ),
+            ListTile(
+              leading: const Icon(Icons.bug_report_outlined),
+              title: const Text('Report a bug or suggest a feature'),
+              trailing: const Icon(Icons.open_in_new_rounded, size: 20),
+              onTap: () => _open(context, '$_repoUrl/issues'),
+            ),
+            ListTile(
+              leading: const Icon(Icons.library_music_outlined),
+              title: const Text('Credits'),
+              subtitle: const Text(
+                'Streams from Audius and the Internet Archive. Lyrics from '
+                'LRCLIB. Built-in raga tracks are original and CC0. All '
+                'other songs belong to their respective artists and labels.',
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.description_outlined),
+              title: const Text('Open-source licences'),
+              onTap: () => showLicensePage(
+                context: context,
+                applicationName: 'Swara',
+                applicationVersion: version,
+                applicationLegalese: '© 2026 ChandraChaan · MIT License',
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

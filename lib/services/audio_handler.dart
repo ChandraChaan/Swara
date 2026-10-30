@@ -31,7 +31,7 @@ class AppAudioHandler extends BaseAudioHandler
     return AudioService.init(
       builder: AppAudioHandler.new,
       config: const AudioServiceConfig(
-        androidNotificationChannelId: 'com.example.audioplayer.playback',
+        androidNotificationChannelId: 'com.chandrachaan.swara.playback',
         androidNotificationChannelName: 'Music playback',
         androidNotificationOngoing: true,
         androidStopForegroundOnPause: true,
