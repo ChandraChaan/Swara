@@ -1,18 +1,29 @@
 name: swara
-description: "Swara - a music player for Indian classical ragas"
+description: Swara - a Telugu-first Indian music player with online streaming and offline downloads.
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 2.0.0+2
 
 environment:
-  sdk: ^3.12.2
+  sdk: ^3.8.0
 
 dependencies:
   flutter:
     sdk: flutter
+  audio_metadata_reader: ^1.8.1
+  audio_service: ^0.18.19
+  audio_session: ^0.2.4
+  cached_network_image: ^4.0.5
+  connectivity_plus: ^7.3.2
+  file_picker: ^13.3.0
+  hive_ce: ^2.22.0
+  hive_ce_flutter: ^2.5.0
+  http: ^1.6.0
+  just_audio: ^0.10.6
+  path_provider: ^2.1.6
   provider: ^6.1.5+1
-  audioplayers: ^6.8.1
-  shared_preferences: ^2.5.6
+  share_plus: ^13.3.1
+  flutter_cache_manager: ^3.4.6
   package_info_plus: ^10.2.2
   url_launcher: ^6.3.3
 
@@ -20,25 +31,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
-  flutter_launcher_icons: ^0.14.4
 
 flutter:
   uses-material-design: true
   assets:
-    - assets/catalog.json
     - assets/audio/
-    - assets/covers/
-    - assets/icon/
-
-flutter_launcher_icons:
-  android: true
-  ios: true
-  remove_alpha_ios: true
-  image_path: assets/icon/app_icon.png
-  adaptive_icon_background: "#6A1FD1"
-  adaptive_icon_foreground: assets/icon/app_icon_foreground.png
-  web:
-    generate: true
-    image_path: assets/icon/app_icon.png
-    background_color: "#14101F"
-    theme_color: "#6A1FD1"
+    - assets/artwork/

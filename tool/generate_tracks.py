@@ -1,4 +1,4 @@
-"""Generates Swara's bundled demo tracks and their cover art.
+"""Generates Swara's built-in raga tracks and their cover art.
 
 Every track is synthesized from scratch (tanpura drone, tabla theka and a
 melody instrument improvising on a raga), so the audio is original and is
@@ -8,10 +8,11 @@ Usage:
     python3 -m venv .venv && .venv/bin/pip install numpy pillow
     .venv/bin/python tool/generate_tracks.py
 
-Requires ffmpeg on PATH for MP3 encoding.
+Requires ffmpeg on PATH for MP3 encoding. Writes assets/audio/<id>.mp3 and
+assets/artwork/<id>.jpg; the matching Song entries live in
+CatalogRepository.bundled (lib/data/catalog_repository.dart).
 """
 
-import json
 import pathlib
 import subprocess
 import tempfile
@@ -23,7 +24,7 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 SR = 44100
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 AUDIO_DIR = ROOT / "assets" / "audio"
-COVER_DIR = ROOT / "assets" / "covers"
+COVER_DIR = ROOT / "assets" / "artwork"
 
 # id, title, raga, scale (semitones from Sa), tonic Hz, tempo bpm,
 # instrument, tala, cover colours, seed
@@ -292,37 +293,15 @@ def write_cover(spec, path, size=512):
     img.convert("RGB").save(path, quality=88)
 
 
-def write_icon(path, size=1024):
-    yy, xx = np.mgrid[0:size, 0:size] / size
-    mix = np.clip((xx + yy) / 2, 0, 1)[..., None]
-    c1, c2 = np.array(hex_rgb("#ff7a59")), np.array(hex_rgb("#6a1fd1"))
-    img = Image.fromarray((c1 * (1 - mix) + c2 * mix).astype(np.uint8)).convert("RGBA")
-    d = ImageDraw.Draw(img)
-    cx = cy = size / 2
-    for i, h in enumerate([0.18, 0.34, 0.52, 0.34, 0.18]):  # waveform bars
-        x = cx + (i - 2) * size * 0.12
-        half = size * h / 2
-        d.rounded_rectangle([x - size * 0.035, cy - half, x + size * 0.035, cy + half], radius=size * 0.035, fill=(255, 255, 255, 240))
-    img.convert("RGB").save(path)
-
 
 def main():
     AUDIO_DIR.mkdir(parents=True, exist_ok=True)
     COVER_DIR.mkdir(parents=True, exist_ok=True)
-    catalog = []
     for spec in TRACKS:
         track_id, title, raga, scale, tonic, bpm, instrument, tala, *_ = spec
         print(f"Rendering {title} ({raga}, {instrument}, {tala}, {bpm} bpm)")
         write_mp3(mix_track(spec), spec, AUDIO_DIR / f"{track_id}.mp3")
         write_cover(spec, COVER_DIR / f"{track_id}.jpg")
-        catalog.append({
-            "id": track_id, "title": title, "artist": ARTIST, "album": ALBUM,
-            "raga": raga, "instrument": instrument, "tala": tala.capitalize(), "bpm": bpm,
-            "audio": f"assets/audio/{track_id}.mp3", "cover": f"assets/covers/{track_id}.jpg",
-        })
-    (ROOT / "assets" / "catalog.json").write_text(json.dumps(catalog, indent=2) + "\n")
-    (ROOT / "assets" / "icon").mkdir(exist_ok=True)
-    write_icon(ROOT / "assets" / "icon" / "app_icon.png")
 
 
 if __name__ == "__main__":
